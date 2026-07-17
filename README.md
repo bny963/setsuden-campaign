@@ -1,7 +1,19 @@
 # 節電チャレンジ！キャンペーンサイト
 
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
+![Go](https://img.shields.io/badge/Go-1.22-00ADD8?logo=go&logoColor=white)
+
 架空の節電キャンペーンを想定したランディングページです。  
 フロントエンドに React (Vite)、バックエンドに Go を使用しています。
+
+## 機能
+
+- ヒーローセクション（キャッチコピー + CTAボタン）
+- キャンペーン参加ステップをカードで表示
+- 応募フォーム（バリデーション + Go APIへのPOST送信）
+- 送信後のサンクス画面
+- レスポンシブ対応
 
 ## 画面構成
 
@@ -74,7 +86,7 @@
 
 ## 起動方法
 
-**バックエンド（Go）**
+**1. バックエンド（Go）を起動**
 
 ```bash
 cd backend
@@ -82,7 +94,7 @@ go run main.go
 # → http://localhost:8080 で起動
 ```
 
-**フロントエンド（React）**
+**2. フロントエンド（React）を起動**
 
 ```bash
 cd setsuden-campaign
@@ -91,4 +103,11 @@ npm run dev
 # → http://localhost:5173 で起動
 ```
 
+ブラウザで http://localhost:5173 を開きます。
+
 > Vite の `/api` プロキシ設定により、フロントエンドからの API リクエストは自動的に `:8080` に転送されます。
+
+## 注意事項
+
+このサイトはポートフォリオ用の架空キャンペーンサイトです。  
+応募データはサーバーのメモリ上にのみ保存されます（再起動でリセット）。
