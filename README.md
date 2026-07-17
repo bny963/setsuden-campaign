@@ -1,7 +1,7 @@
 # 節電チャレンジ！キャンペーンサイト
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-1.22-00ADD8?logo=go&logoColor=white)
 
 架空の節電キャンペーンを想定したランディングページです。  
