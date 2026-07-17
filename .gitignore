@@ -1,0 +1,12 @@
+# Go binary
+backend/server
+
+# Node
+setsuden-campaign/node_modules/
+
+# Go tarball
+setsuden-campaign/go1.22.5.linux-amd64.tar.gz
+go1.22.5.linux-amd64.tar.gz
+
+# Build output
+setsuden-campaign/dist/
