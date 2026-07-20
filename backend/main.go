@@ -13,12 +13,16 @@ type Entry struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
+	Address   string    `json:"address"`
+	Phone     string    `json:"phone"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
 type EntryRequest struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	Address string `json:"address"`
+	Phone   string `json:"phone"`
 }
 
 type ErrorResponse struct {
@@ -70,6 +74,8 @@ func createEntry(w http.ResponseWriter, r *http.Request) {
 
 	req.Name = strings.TrimSpace(req.Name)
 	req.Email = strings.TrimSpace(req.Email)
+	req.Address = strings.TrimSpace(req.Address)
+	req.Phone = strings.TrimSpace(req.Phone)
 
 	if req.Name == "" {
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{"名前は必須です"})
@@ -79,19 +85,29 @@ func createEntry(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusBadRequest, ErrorResponse{"正しいメールアドレスを入力してください"})
 		return
 	}
+	if req.Address == "" {
+		writeJSON(w, http.StatusBadRequest, ErrorResponse{"住所は必須です"})
+		return
+	}
+	if req.Phone == "" {
+		writeJSON(w, http.StatusBadRequest, ErrorResponse{"電話番号は必須です"})
+		return
+	}
 
 	mu.Lock()
 	entry := Entry{
 		ID:        nextID,
 		Name:      req.Name,
 		Email:     req.Email,
+		Address:   req.Address,
+		Phone:     req.Phone,
 		CreatedAt: time.Now(),
 	}
 	entries = append(entries, entry)
 	nextID++
 	mu.Unlock()
 
-	log.Printf("[応募受付] ID:%d  %s <%s>", entry.ID, entry.Name, entry.Email)
+	log.Printf("[応募受付] ID:%d  %s <%s> 住所:%s 電話:%s", entry.ID, entry.Name, entry.Email, entry.Address, entry.Phone)
 	writeJSON(w, http.StatusCreated, entry)
 }
 

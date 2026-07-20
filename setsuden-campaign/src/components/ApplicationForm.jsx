@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './ApplicationForm.module.css'
 
-const initialState = { name: '', email: '', agreed: false }
+const initialState = { name: '', email: '', address: '', phone: '', agreed: false }
 
 export default function ApplicationForm() {
   const [form, setForm] = useState(initialState)
@@ -17,6 +17,12 @@ export default function ApplicationForm() {
       errs.email = 'メールアドレスを入力してください'
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       errs.email = '正しいメールアドレスを入力してください'
+    }
+    if (!form.address.trim()) errs.address = 'ご住所を入力してください'
+    if (!form.phone.trim()) {
+      errs.phone = '電話番号を入力してください'
+    } else if (!/^[0-9-]+$/.test(form.phone)) {
+      errs.phone = '正しい電話番号を入力してください'
     }
     if (!form.agreed) errs.agreed = '個人情報の取り扱いに同意してください'
     return errs
@@ -43,7 +49,12 @@ export default function ApplicationForm() {
       const res = await fetch('/api/entries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: form.name, email: form.email }),
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          address: form.address,
+          phone: form.phone,
+        }),
       })
       if (!res.ok) {
         const data = await res.json()
@@ -114,6 +125,38 @@ export default function ApplicationForm() {
               onChange={handleChange}
             />
             {errors.email && <p className={styles.errorMsg}>{errors.email}</p>}
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.fieldLabel} htmlFor="address">
+              ご住所 <span className={styles.required}>必須</span>
+            </label>
+            <input
+              id="address"
+              name="address"
+              type="text"
+              className={`${styles.input} ${errors.address ? styles.inputError : ''}`}
+              placeholder="東京都渋谷区〇〇1-2-3"
+              value={form.address}
+              onChange={handleChange}
+            />
+            {errors.address && <p className={styles.errorMsg}>{errors.address}</p>}
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.fieldLabel} htmlFor="phone">
+              電話番号 <span className={styles.required}>必須</span>
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              className={`${styles.input} ${errors.phone ? styles.inputError : ''}`}
+              placeholder="090-1234-5678"
+              value={form.phone}
+              onChange={handleChange}
+            />
+            {errors.phone && <p className={styles.errorMsg}>{errors.phone}</p>}
           </div>
 
           <div className={styles.checkField}>
